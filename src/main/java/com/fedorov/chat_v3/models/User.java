@@ -1,4 +1,4 @@
-package com.fedorov.chat_v2.models;
+package com.fedorov.chat_v3.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

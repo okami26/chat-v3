@@ -1,9 +1,9 @@
-package com.fedorov.chat_v2.services;
+package com.fedorov.chat_v3.services;
 
-import com.fedorov.chat_v2.advice.UserNameException;
-import com.fedorov.chat_v2.advice.UserNotFoundException;
-import com.fedorov.chat_v2.models.User;
-import com.fedorov.chat_v2.repositories.UserRepository;
+import com.fedorov.chat_v3.advice.UserNameException;
+import com.fedorov.chat_v3.advice.UserNotFoundException;
+import com.fedorov.chat_v3.models.User;
+import com.fedorov.chat_v3.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

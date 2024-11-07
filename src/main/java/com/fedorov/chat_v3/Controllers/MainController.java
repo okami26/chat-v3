@@ -1,10 +1,8 @@
-package com.fedorov.chat_v2.Controllers;
+package com.fedorov.chat_v3.Controllers;
 
-import com.fedorov.chat_v2.TestResponse;
-import com.fedorov.chat_v2.models.User;
-import com.fedorov.chat_v2.models.UserResponse;
-import com.fedorov.chat_v2.repositories.UserRepository;
-import com.fedorov.chat_v2.services.UserService;
+import com.fedorov.chat_v3.models.User;
+import com.fedorov.chat_v3.models.UserResponse;
+import com.fedorov.chat_v3.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

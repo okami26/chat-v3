@@ -1,4 +1,4 @@
-package com.fedorov.chat_v2.models;
+package com.fedorov.chat_v3;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -8,13 +8,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserResponse {
-    @NotEmpty(message = "Name should not be empty")
-    private int id;
+public class TestLoginResponse {
     @NotEmpty(message = "Name should not be empty")
     private String username;
     @NotEmpty(message = "Name should not be empty")
     private String password;
     @NotEmpty(message = "Name should not be empty")
-    private String token;
+    private String message;
 }
+

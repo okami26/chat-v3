@@ -1,6 +1,6 @@
-package com.fedorov.chat_v2.repositories;
+package com.fedorov.chat_v3.repositories;
 
-import com.fedorov.chat_v2.models.User;
+import com.fedorov.chat_v3.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.fedorov.chat_v2;
+package com.fedorov.chat_v3;
 
 
 import org.springframework.stereotype.Component;

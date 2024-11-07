@@ -1,6 +1,5 @@
-package com.fedorov.chat_v2.advice;
+package com.fedorov.chat_v3.advice;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

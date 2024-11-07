@@ -1,4 +1,4 @@
-package com.fedorov.chat_v2.advice;
+package com.fedorov.chat_v3.advice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
