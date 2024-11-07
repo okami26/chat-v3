@@ -34,7 +34,7 @@
             <input type="text" id="registry_username" placeholder="Username" name="username" required>
             <br>
             <input type="password" id="registry_password" placeholder="Password" name="password" required>
-
+            <br>
             <input type="text" id="registry_firstname" placeholder="Firstname" name="firstname" required>
             <br>
             <input type="text" id="registry_lastname" placeholder="Lastname" name="lastname" required>
@@ -42,17 +42,20 @@
             <input type="email" id="registry_email" placeholder="Email" name="email" required>
             <br>
             <input type="text" id="registry_phone" placeholder="Phone number" name="phone" required>
-            <input type="file" id="inputFileToLoad"  name="image">
+            <br>
+            <input type="file" id="inputFileToLoad"  name="image" accept="image/*" required>
             <br>
 
+
             <button type="submit">Submit</button>
+            <button type="button" onclick="test()">Xui</button>
         </form>
 
     </div>
 
     <div class="profile" id="profile">
         <div id="up_line">
-            <p>Pidor</p>
+            <p>TelePidor</p>
         </div>
         <div id="left_line">
             <button type="button" id="my_profile_button">Моя страница</button>
@@ -63,17 +66,16 @@
             <button>Фотографии</button>
         </div>
         <div id="center_line">
-            <div id="my_profile">
+            <div id="my_profile" class="hidden">
                 <div id="inform">
-
+                    <img id="userImage">
                     <p id="fcs">АААА</p>
                     <button>Редактировать профиль</button>
                     <button>Еще</button>
 
                 </div>
-
-
             </div>
+
         </div>
     </div>
   <script src="main.js"></script>
