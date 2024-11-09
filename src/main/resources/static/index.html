@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="container" id="signUp">
+    <div class="container_s" id="signUp">
 
         <form id="myForm" onsubmit="signin(); return false">
             <p>Login</p>
@@ -26,7 +26,7 @@
     </div>
 
 
-    <div class="container hidden" id="registry">
+    <div class="container_s hidden" id="registry">
 
         <form id="myFormRegistry" onsubmit="registry(); return false">
             <p>Registry</p>
@@ -48,35 +48,47 @@
 
 
             <button type="submit">Submit</button>
-            <button type="button" onclick="test()">Xui</button>
+
         </form>
 
     </div>
 
-    <div class="profile" id="profile">
-        <div id="up_line">
-            <p>TelePidor</p>
-        </div>
-        <div id="left_line">
-            <button type="button" id="my_profile_button">Моя страница</button>
-            <button>Новости</button>
-            <button>Мессенджер</button>
-            <button>Друзья</button>
-            <button>Сообщества</button>
-            <button>Фотографии</button>
-        </div>
-        <div id="center_line">
-            <div id="my_profile" class="hidden">
-                <div id="inform">
-                    <img id="userImage">
-                    <p id="fcs">АААА</p>
-                    <button>Редактировать профиль</button>
-                    <button>Еще</button>
-
+    <div id="profile" class="wrapper hidden">
+        <header class="header">
+            <div class="header-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>TelePidor</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </header>
+        <main class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4 buttons">
+                        <button class="dark-button" id='my_profile_button'>Моя страница</button>
+                        <button class="dark-button">Новости</button>
+                        <button class="dark-button">Мессенджер</button>
+                        <button class="dark-button">Друзья</button>
+                    </div>
+                    <div class="col-md-6 hidden" id="profile2">
+                        <div class="container-fluid profile_top">
+                            <div class="row" >
+                                <div class="col-md-12 top">
+                                    <img id="userImage">
+                                    <p id="fcs"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
 
-        </div>
+
     </div>
   <script src="main.js"></script>
 </body>

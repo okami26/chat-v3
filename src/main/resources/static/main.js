@@ -5,9 +5,8 @@ let lastname = ""
 let token=""
 const button = document.querySelector('#button_registry');
 const my_profile_button = document.getElementById('my_profile_button')
-
-
 let id;
+
 async function signin() {
 
     const form = document.getElementById('myForm');
@@ -89,7 +88,7 @@ async function registry() {
             if (json.status == 400) {
                 alert(json.message);
             } else {
-                // Если пользователь успешно создан, загружаем изображение
+
                 try {
                     await upload_image(new_data.username);
                     window.location.href = 'index.html';
@@ -119,6 +118,7 @@ const callback = () => {
 
 async function getUser () {
     let fcs = document.getElementById('fcs')
+    console.log(id)
     try {
 
 
@@ -132,9 +132,9 @@ async function getUser () {
 
         const userData = await response.json();
 
-        document.getElementById('my_profile').classList.remove('hidden');
+        document.getElementById('profile2').classList.remove('hidden');
         console.log(userData)
-        fcs.innerHTML = userData.username + ' ' + userData.lastname
+        fcs.innerHTML = userData.firstname + ' ' + userData.lastname
         downloadUser(userData.username);
 
     } catch (error) {
@@ -182,7 +182,7 @@ async function upload_image(username){
                 body: new_image // Отправляем FormData
             });
 
-            // Проверяем статус ответа
+
             if (!response.ok) {
                 throw new Error(`Ошибка: ${response.status}`);
             }
@@ -205,30 +205,30 @@ async function test(){
 }
 
 async function downloadUser (username) {
-    const url = `/user_image/${username}`; // Формируем URL для запроса
+    const url = `/user_image/${username}`;
     try {
         const response = await fetch(url, {
-            method: 'GET', // Указываем метод GET для загрузки изображения
+            method: 'GET',
             headers: {
-                'Accept': 'image/jpeg' // Указываем, что ожидаем изображение в формате JPEG
+                'Accept': 'image/jpeg'
             }
         });
-        // Проверяем, был ли успешным ответ
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        // Получаем данные изображения в виде Blob
+
         const imageBlob = await response.blob();
 
-        // Создаем URL для изображения
+
         const imageUrl = URL.createObjectURL(imageBlob);
 
-        // Находим элемент img на странице, куда будем вставлять изображение
-        const imgElement = document.getElementById('userImage'); // Предполагаем, что у вас есть <img id="userImage">
 
-        // Устанавливаем src для элемента img
+        const imgElement = document.getElementById('userImage');
+
+
         imgElement.src = imageUrl;
-        // Если нужно, можно также установить атрибут alt
+
         imgElement.alt = `Image of ${username}`;
     } catch (error) {
         console.error('Ошибка при загрузке изображения:', error);

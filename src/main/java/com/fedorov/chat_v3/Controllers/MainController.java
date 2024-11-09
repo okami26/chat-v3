@@ -1,7 +1,9 @@
 package com.fedorov.chat_v3.Controllers;
 
+import com.fedorov.chat_v3.models.FeedMessage;
 import com.fedorov.chat_v3.models.User;
 import com.fedorov.chat_v3.models.UserResponse;
+import com.fedorov.chat_v3.services.FeedService;
 import com.fedorov.chat_v3.services.FileDataService;
 import com.fedorov.chat_v3.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class MainController {
     @Autowired
     private FileDataService fileDataService;
 
+    @Autowired
+    private FeedService feedService;
     @Value("${spring.token}")
     private String token;
 
@@ -67,7 +71,7 @@ public class MainController {
 
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) throws IOException {
-        String upload_image = fileDataService.uploadImage(file, username);
+        fileDataService.uploadImage(file, username);
         return ResponseEntity.ok("{\"message\": \"Файл загружен успешно: " + file.getOriginalFilename() + "\"}");
     }
 
@@ -84,6 +88,20 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK)
                     .contentType(MediaType.valueOf("image/jpeg"))
                     .body(imageData);
+
+    }
+
+    @GetMapping("/feed")
+    public ResponseEntity<?> getFeed() {
+
+        return ResponseEntity.ok(feedService.getFeeds());
+
+    }
+
+    @PostMapping("/feed")
+    public ResponseEntity<?> createFeed(@RequestBody FeedMessage feedMessage) {
+
+        return ResponseEntity.ok(feedService.createFeed(feedMessage));
 
     }
 }
