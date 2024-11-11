@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col-md-4 buttons">
                         <button class="dark-button" id='my_profile_button'>Моя страница</button>
-                        <button class="dark-button">Новости</button>
+                        <button class="dark-button" id="feed_button">Новости</button>
                         <button class="dark-button">Мессенджер</button>
                         <button class="dark-button">Друзья</button>
                     </div>
@@ -84,12 +84,30 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 hidden" id="feed">
+                        <div class="container-fluid new_note">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" placeholder="Что у вас нового?" id="new_note">
+                                    <button type="button" class="dark-button" id="new_note_button">Опубликовать</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="container-fluid feed">
+
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </main>
 
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.fedorov.chat_v3;
+package com.fedorov.chat_v3.test;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;

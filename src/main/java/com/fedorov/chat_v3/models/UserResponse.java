@@ -13,8 +13,16 @@ public class UserResponse {
     private int id;
     @NotEmpty(message = "Name should not be empty")
     private String username;
-    @NotEmpty(message = "Name should not be empty")
-    private String password;
+
     @NotEmpty(message = "Name should not be empty")
     private String token;
+
+    @NotEmpty(message = "Name should not be empty")
+    private String firstname;
+
+    @NotEmpty(message = "Name should not be empty")
+    private String lastname;
+
+
+
 }

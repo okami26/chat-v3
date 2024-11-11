@@ -29,6 +29,7 @@ public class MainController {
 
     @Autowired
     private FeedService feedService;
+
     @Value("${spring.token}")
     private String token;
 
@@ -61,7 +62,7 @@ public class MainController {
 
         if (userService.signup(user.getUsername(), user.getPassword())) {
             User user_base = userService.getUser(user.getUsername());
-            UserResponse response = new UserResponse(user_base.getId(), user_base.getUsername(), user_base.getPassword(), token);
+            UserResponse response = new UserResponse(user_base.getId(), user_base.getUsername(), token, user_base.getFirstname(), user_base.getLastname());
 
             return ResponseEntity.ok(response);
         };
@@ -99,7 +100,7 @@ public class MainController {
     }
 
     @PostMapping("/feed")
-    public ResponseEntity<?> createFeed(@RequestBody FeedMessage feedMessage) {
+    public ResponseEntity<?> createFeed(@RequestBody @Validated FeedMessage feedMessage) {
 
         return ResponseEntity.ok(feedService.createFeed(feedMessage));
 

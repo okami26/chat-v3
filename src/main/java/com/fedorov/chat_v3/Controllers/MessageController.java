@@ -12,15 +12,16 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class FeedController {
+public class MessageController {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+
     @Autowired
     private FeedService feedService;
 
 
-    @MessageMapping("/feed.addNote")
+    @MessageMapping("/message.addMessage")
 
     public void addUser(@Payload FeedMessage feedMessage, SimpMessageHeaderAccessor headerAccessor){
 

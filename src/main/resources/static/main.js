@@ -5,14 +5,20 @@ let lastname = ""
 let token=""
 const button = document.querySelector('#button_registry');
 const my_profile_button = document.getElementById('my_profile_button')
+const feed_button = document.getElementById('feed_button')
+const new_note_button = document.getElementById('new_note_button')
+let fcs;
+let json;
 let id;
 
+var stompClient = null;
 async function signin() {
 
     const form = document.getElementById('myForm');
     const signin_data = new FormData(form);
 
     const url = '/signup';
+    const url2 = "/feed"
 
     const new_data = {
         username: signin_data.get("username"),
@@ -32,7 +38,7 @@ async function signin() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const json = await response.json();
+        json = await response.json();
         const token = json.token;
         id = json.id;
         console.log('Успех:', JSON.stringify(json));
@@ -41,13 +47,18 @@ async function signin() {
         document.getElementById('signUp').classList.add('hidden');
         document.getElementById('profile').style.display = "flex";
 
-        this.username = new_data.username;
+        username = new_data.username;
 
     } catch (error) {
 
         console.error('Ошибка:', error);
         alert('Произошла ошибка при входе. Пожалуйста, проверьте введенные данные и попробуйте снова.');
     }
+
+
+
+    connect()
+
 }
 
 
@@ -118,6 +129,7 @@ const callback = () => {
 
 async function getUser () {
     let fcs = document.getElementById('fcs')
+    document.getElementById('feed').classList.add('hidden')
     console.log(id)
     try {
 
@@ -135,7 +147,7 @@ async function getUser () {
         document.getElementById('profile2').classList.remove('hidden');
         console.log(userData)
         fcs.innerHTML = userData.firstname + ' ' + userData.lastname
-        downloadUser(userData.username);
+        downloadUserImage(userData.username);
 
     } catch (error) {
 
@@ -144,10 +156,52 @@ async function getUser () {
     }
 }
 
+async function getFeed() {
 
-async function get_token() {
-    console.log(token)
+    let response = await fetch("/feed")
+    let data = await response.json()
+    let container = document.querySelector(".feed")
+
+    document.getElementById('feed').classList.remove('hidden')
+    document.getElementById('profile2').classList.add('hidden')
+    container.innerHTML=""
+    for (let item of data) {
+
+
+        let container_2 = document.createElement("div")
+        container_2.classList.add("container-fluid", "note")
+        let row = document.createElement("div")
+        let row2 = document.createElement("div")
+        row.classList.add("row")
+        row2.classList.add("row")
+        let col = document.createElement('div')
+        let col2 = document.createElement('div')
+        col.classList.add("col-md-12", "top_feed")
+
+        col2.classList.add("col-md-12", "top_feed")
+
+        row.appendChild(col)
+        let fcs = document.createElement("p")
+        let fcs_text = document.createTextNode(item.sender)
+        let content = document.createElement("p")
+        let content_text = document.createTextNode(item.content)
+        let img = document.createElement('img')
+        img.src = await downloadUser(item.sender)
+        fcs.appendChild(fcs_text)
+        content.appendChild(content_text)
+        col.appendChild(img)
+        col.appendChild(fcs)
+        col2.appendChild(content)
+        row2.appendChild(col2)
+
+        container_2.appendChild(row)
+        container_2.appendChild(row2)
+        container.appendChild(container_2)
+    }
 }
+
+
+
 
 
 
@@ -199,12 +253,9 @@ async function upload_image(username){
     }
 }
 
-async function test(){
-    const image = document.getElementById("inputFileToLoad")
-    console.log(image.files[0].type)
-}
 
-async function downloadUser (username) {
+
+async function downloadUserImage (username) {
     const url = `/user_image/${username}`;
     try {
         const response = await fetch(url, {
@@ -236,7 +287,143 @@ async function downloadUser (username) {
     }
 }
 
+async function downloadUser (username) {
+    const url = `/user_image/${username}`;
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'image/jpeg'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const imageBlob = await response.blob();
+
+
+        const imageUrl = URL.createObjectURL(imageBlob);
+
+
+
+
+
+
+
+        return imageUrl;
+    } catch (error) {
+        console.error('Ошибка при загрузке изображения:', error);
+        alert('Не удалось загрузить изображение. Пожалуйста, попробуйте позже.');
+    }
+}
+
+
+function connect() {
+
+
+
+
+
+    var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({"username": username}, onConnected);
+
+
+}
+
+function onConnected() {
+
+    stompClient.subscribe('/topic/feed', onMessageReceived);
+
+}
+
+
+async function onMessageReceived(payload) {
+
+    let container = document.querySelector(".feed")
+    let item = JSON.parse(payload.body);
+    let container_2 = document.createElement("div")
+    container_2.classList.add("container-fluid", "note")
+    let row = document.createElement("div")
+    let row2 = document.createElement("div")
+    row.classList.add("row")
+    row2.classList.add("row")
+    let col = document.createElement('div')
+    let col2 = document.createElement('div')
+    col.classList.add("col-md-12", "top_feed")
+
+    col2.classList.add("col-md-12", "top_feed")
+
+    row.appendChild(col)
+    let fcs = document.createElement("p")
+    let fcs_text = document.createTextNode(item.sender)
+    let content = document.createElement("p")
+    let content_text = document.createTextNode(item.content)
+    let img = document.createElement('img')
+    img.src = await downloadUser(item.sender)
+    fcs.appendChild(fcs_text)
+    content.appendChild(content_text)
+    col.appendChild(img)
+    col.appendChild(fcs)
+    col2.appendChild(content)
+    row2.appendChild(col2)
+
+    container_2.appendChild(row)
+    container_2.appendChild(row2)
+    container.prepend(container_2)
+
+
+}
+
+async function new_note(){
+
+    let text_input = document.getElementById("new_note")
+    stompClient.send("/app/feed.addNote",
+        {},
+        JSON.stringify({
+            content: text_input.value,
+            sender: json.username,
+            type: "NOTE",
+            date: "12.12.1234 12:12"
+        }))
+
+    const url2 = "/feed"
+    try {
+        let data2 = {
+            content: text_input.value,
+            sender: json.username,
+            type: "NOTE",
+            date: "12.12.1234 12:12"
+
+        }
+        const response2 = await fetch(url2, {
+            method: "POST",
+            body: JSON.stringify(data2),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        })
+
+        if (!response2.ok) {
+            throw new Error(`HTTP error! status: ${response2.status}`);
+        }
+
+
+    } catch (error){
+        console.error('Ошибка:', error);
+
+    }
+    text_input.value = ""
+
+}
+
+new_note_button.addEventListener('click', new_note)
 my_profile_button.addEventListener('click', getUser)
+feed_button.addEventListener('click', getFeed)
 button.addEventListener('click', callback);
 
 

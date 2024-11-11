@@ -97,7 +97,7 @@ main.main {
     background-color: #43364d;
 
     border-radius: 20px;
-    padding-top: 70px;
+    padding-top: 30px;
     padding-left: 20px;
 
 }
@@ -123,4 +123,48 @@ main.main {
     padding-top: 80px;
     font-weight: bold;
 
+}
+
+.note {
+    display: flex;
+    flex-direction: column;
+    height: 25vh;
+    width: 70%;
+
+
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 20px;
+    border: 1px solid #b6b4b4;
+
+    margin-bottom: 20px;
+}
+
+.top_feed {
+    display: flex;
+}
+
+.note img {
+
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border: 5px solid #515452;
+
+}
+
+.new_note {
+    display: flex;
+    flex-direction: column;
+    height: 15vh;
+    width: 70%;
+
+
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 20px;
+    border: 1px solid #b6b4b4;
+
+    margin-bottom: 20px;
 }
