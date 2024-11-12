@@ -53,6 +53,7 @@ async function signin() {
         document.getElementById('signUp').classList.add('hidden');
         document.getElementById('profile').style.display = "flex";
 
+
         username = new_data.username;
 
     } catch (error) {
@@ -62,8 +63,8 @@ async function signin() {
     }
 
 
-
-    connect()
+    await getUser();
+    await connect()
 
 }
 
@@ -137,6 +138,7 @@ async function getUser () {
     let fcs = document.getElementById('fcs')
     document.getElementById('feed').classList.add('hidden')
     document.getElementById('messages').classList.add('hidden');
+    await disconnect()
     console.log(id)
     try {
 
@@ -172,6 +174,7 @@ async function getFeed() {
     document.getElementById('feed').classList.remove('hidden')
     document.getElementById('profile2').classList.add('hidden')
     document.getElementById('messages').classList.add('hidden');
+    await disconnect()
     container.innerHTML=""
     for (let item of data) {
 
@@ -328,7 +331,7 @@ async function downloadUser (username) {
 }
 
 
-function connect() {
+async function connect() {
 
 
 
@@ -443,15 +446,19 @@ async function getUsersMessage(){
     let container = document.querySelector(".messages")
     let response = await fetch("/users")
     let data = await response.json()
+    await disconnect()
     document.getElementById('feed').classList.add('hidden')
     document.getElementById('profile2').classList.add('hidden')
     document.getElementById('messages').classList.remove('hidden');
+
     container.innerHTML=""
     for (let item of data) {
 
 
         let container_2 = document.createElement("div")
         container_2.addEventListener('click', (event) => {
+            sender = username;
+            recipient = item.username
             connectChat(username, item.username)
         })
         container_2.classList.add("container-fluid", "note")
@@ -488,14 +495,25 @@ async function getUsersMessage(){
 }
 
 
-async function connectChat(sender, recipient){
+let subscriptions = []; // Массив для хранения подписок
 
-    stompClient.subscribe('/topic/message/' + sender, onMessageReceivedSender);
-    stompClient.subscribe('/topic/message/' + recipient, onMessageReceivedRecipient);
+async function connectChat(sender, recipient) {
+    // Отписываемся от предыдущих подписок
+    for (let sub of subscriptions) {
+        sub.unsubscribe();
+    }
+    subscriptions = []; // Очищаем массив подписок
 
-    console.log(sender, recipient)
-    await chat(sender, recipient)
+    // Подписываемся на новые каналы
+    const senderSubscription = stompClient.subscribe('/topic/message/' + sender, onMessageReceivedSender);
+    const recipientSubscription = stompClient.subscribe('/topic/message/' + recipient, onMessageReceivedRecipient);
 
+    // Сохраняем подписки в массив
+    subscriptions.push(senderSubscription);
+    subscriptions.push(recipientSubscription);
+
+    console.log(sender, recipient);
+    await chat(sender, recipient);
 }
 
 async function onMessageReceivedSender(payload){
@@ -579,4 +597,25 @@ async function chat(sender, recipient) {
     let users = document.getElementById('users')
     users.innerHTML = sender + ", " + recipient
 
+}
+
+async function disconnect() {
+    // Очистка сообщений
+    let mes = document.getElementById('m');
+    mes.innerHTML = "";
+
+    // Очистка списка пользователей
+    let users = document.getElementById('users');
+    users.innerHTML = "";
+
+    // Скрытие чата
+    document.getElementById('chat').classList.add('hidden');
+
+    recipient2=""
+
+    // Проверка существования stompClient перед отпиской
+
+    let message_input = document.getElementById('message_input')
+
+    message_input.value = ""
 }
