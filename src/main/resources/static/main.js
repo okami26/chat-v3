@@ -2,7 +2,7 @@
 let username = ""
 let firstname = ""
 let lastname = ""
-let token=""
+
 
 let recipient2;
 
