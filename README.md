@@ -26,5 +26,4 @@
 - Запустите init.sql
 - Создайте директорию FileSystem\Users
 - Укажите в переменной "FOLDER_PATH" в FileDataService полный путь до директории
-  Пример:
-  "C:\\Users\\Ваш_Пользователь\\IdeaProjects\\chat-v3\\src\\main\\resources\\static\\FileSystem\\Users";
+- Пример: "C:\\Users\\Ваш_Пользователь\\IdeaProjects\\chat-v3\\src\\main\\resources\\static\\FileSystem\\Users";
