@@ -34,13 +34,13 @@ public class MainController {
     private String token;
 
     @GetMapping("/users")
-    public ResponseEntity<?> getUsers(@RequestParam String token) {
+    public ResponseEntity<?> getUsers() {
 
-        if (token != null && token.equals(this.token)) {
+
 
             return ResponseEntity.ok(userService.getUsers());
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+
 
     }
 

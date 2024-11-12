@@ -20,6 +20,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private static final String USER_DIRECTORY = "src/main/resources/static/FileSystem/Users";
+
     public List<User> getUsers() {
         return userRepository.findAll();
     }
@@ -34,20 +36,23 @@ public class UserService {
         return user.orElseThrow(UserNotFoundException::new);
     }
 
-    public User createUser(User user) {
-
+    public User createUser (User user) {
+        // Проверка на существование пользователя с таким же именем
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UserNameException();
         }
 
-        String folder = "src/main/resources/static/FileSystem/Users" + "/" + user.getUsername();
-
+        // Создание директории для пользователя
+        String folder = USER_DIRECTORY + "/" + user.getUsername();
         try {
-            Files.createDirectory(Path.of(folder));
+            // Создаем директорию, если она не существует
+            Files.createDirectories(Path.of(folder)); // Используем createDirectories для создания всех необходимых родительских директорий
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
+            throw new RuntimeException("Не удалось создать директорию для пользователя: " + user.getUsername(), e);
         }
 
+        // Сохранение пользователя в репозитории
         return userRepository.save(user);
     }
 

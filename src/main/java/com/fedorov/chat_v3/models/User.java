@@ -19,34 +19,34 @@ public class User {
     private int id;
 
 
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 5, max = 20)
+    @NotEmpty(message = "Имя пользователя не должно быть пустым")
+    @Size(min = 5, max = 20, message = "Имя пользователя должно содержать от 5 до 20 символов")
     @Column(name = "username")
     private String username;
 
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 5, max = 20)
-    @Column(name="password")
+    @NotEmpty(message = "Пароль не должен быть пустым")
+    @Size(min = 5, max = 20, message = "Пароль должен содержать от 5 до 20 символов")
+    @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 5, max = 20)
-    @Column(name="firstname")
+    @NotEmpty(message = "Имя не должно быть пустым")
+    @Size(min = 5, max = 20, message = "Имя должно содержать от 5 до 20 символов")
+    @Column(name = "firstname")
     private String firstname;
 
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 5, max = 20)
-    @Column(name="lastname")
+    @NotEmpty(message = "Фамилия не должна быть пустой")
+    @Size(min = 5, max = 20, message = "Фамилия должна содержать от 5 до 20 символов")
+    @Column(name = "lastname")
     private String lastname;
 
-    @NotEmpty(message = "Name should not be empty")
-    @Email
-    @Column(name="email")
+    @NotEmpty(message = "Email не должен быть пустым")
+    @Email(message = "Введите корректный email")
+    @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 5, max = 20)
-    @Column(name="phone")
+    @NotEmpty(message = "Телефон не должен быть пустым")
+    @Size(min = 5, max = 20, message = "Телефон должен содержать от 5 до 20 символов")
+    @Column(name = "phone")
     private String phone;
 
 }

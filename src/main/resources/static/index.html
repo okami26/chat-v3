@@ -31,17 +31,17 @@
         <form id="myFormRegistry" onsubmit="registry(); return false">
             <p>Registry</p>
 
-            <input type="text" id="registry_username" placeholder="Username" name="username" required>
+            <input type="text" id="registry_username" placeholder="Username" name="username" minlength="5" maxlength="20" required>
             <br>
-            <input type="password" id="registry_password" placeholder="Password" name="password" required>
+            <input type="password" id="registry_password" placeholder="Password" name="password" minlength="5" maxlength="20" required>
             <br>
-            <input type="text" id="registry_firstname" placeholder="Firstname" name="firstname" required>
+            <input type="text" id="registry_firstname" placeholder="Firstname" name="firstname" minlength="5" maxlength="20" required>
             <br>
-            <input type="text" id="registry_lastname" placeholder="Lastname" name="lastname" required>
+            <input type="text" id="registry_lastname" placeholder="Lastname" name="lastname" minlength="5" maxlength="20" required>
             <br>
             <input type="email" id="registry_email" placeholder="Email" name="email" required>
             <br>
-            <input type="text" id="registry_phone" placeholder="Phone number" name="phone" required>
+            <input type="text" id="registry_phone" placeholder="Phone number" name="phone" minlength="11" maxlength="12" required>
             <br>
             <input type="file" id="inputFileToLoad"  name="image" accept="image/*" required>
             <br>
@@ -59,7 +59,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <p>TelePidor</p>
+                            <p>Я ебал в рот JavaScript нахуй!!!!!!!!!!!</p>
                         </div>
                     </div>
                 </div>
@@ -71,8 +71,8 @@
                     <div class="col-md-4 buttons">
                         <button class="dark-button" id='my_profile_button'>Моя страница</button>
                         <button class="dark-button" id="feed_button">Новости</button>
-                        <button class="dark-button">Мессенджер</button>
-                        <button class="dark-button">Друзья</button>
+                        <button class="dark-button" id="message_button">Мессенджер</button>
+                        <button class="dark-button" id="test_button">Друзья</button>
                     </div>
                     <div class="col-md-6 hidden" id="profile2">
                         <div class="container-fluid profile_top">
@@ -97,6 +97,34 @@
                         <div class="container-fluid feed">
 
 
+                        </div>
+                    </div>
+                    <div class="col-md-6 hidden" id="messages">
+                        <div class="container-fluid messages">
+                            <p>Xui</p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 hidden" id="chat">
+                        <div class="container-fluid chat">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p id="users">Pidor1, Pidor2</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 message-mid">
+                                    <!-- Здесь будут сообщения -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 message-bottom">
+                                    <input type="text" placeholder="Введите сообщение..." id="message_input">
+                                    <button class="dark-button" type="button" id="message_button_submit">Отправить</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

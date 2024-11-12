@@ -3,10 +3,16 @@ let username = ""
 let firstname = ""
 let lastname = ""
 let token=""
+
+let recipient2;
+
 const button = document.querySelector('#button_registry');
 const my_profile_button = document.getElementById('my_profile_button')
 const feed_button = document.getElementById('feed_button')
 const new_note_button = document.getElementById('new_note_button')
+const message_button = document.getElementById("message_button")
+const test_button = document.getElementById("test_button")
+const message_button_submit = document.getElementById("message_button_submit")
 let fcs;
 let json;
 let id;
@@ -130,6 +136,7 @@ const callback = () => {
 async function getUser () {
     let fcs = document.getElementById('fcs')
     document.getElementById('feed').classList.add('hidden')
+    document.getElementById('messages').classList.add('hidden');
     console.log(id)
     try {
 
@@ -164,6 +171,7 @@ async function getFeed() {
 
     document.getElementById('feed').classList.remove('hidden')
     document.getElementById('profile2').classList.add('hidden')
+    document.getElementById('messages').classList.add('hidden');
     container.innerHTML=""
     for (let item of data) {
 
@@ -425,8 +433,150 @@ new_note_button.addEventListener('click', new_note)
 my_profile_button.addEventListener('click', getUser)
 feed_button.addEventListener('click', getFeed)
 button.addEventListener('click', callback);
+message_button.addEventListener('click', getUsersMessage)
+
+message_button_submit.addEventListener('click', sendMessage)
 
 
 
+async function getUsersMessage(){
+    let container = document.querySelector(".messages")
+    let response = await fetch("/users")
+    let data = await response.json()
+    document.getElementById('feed').classList.add('hidden')
+    document.getElementById('profile2').classList.add('hidden')
+    document.getElementById('messages').classList.remove('hidden');
+    container.innerHTML=""
+    for (let item of data) {
 
 
+        let container_2 = document.createElement("div")
+        container_2.addEventListener('click', (event) => {
+            connectChat(username, item.username)
+        })
+        container_2.classList.add("container-fluid", "note")
+        let row = document.createElement("div")
+        let row2 = document.createElement("div")
+        row.classList.add("row")
+        row2.classList.add("row")
+        let col = document.createElement('div')
+        let col2 = document.createElement('div')
+        col.classList.add("col-md-12", "top_feed")
+
+        col2.classList.add("col-md-12", "top_feed")
+
+        row.appendChild(col)
+        let fcs = document.createElement("p")
+        let fcs_text = document.createTextNode(item.username)
+
+
+        let img = document.createElement('img')
+        img.src = await downloadUser(item.username)
+        fcs.appendChild(fcs_text)
+
+        col.appendChild(img)
+        col.appendChild(fcs)
+
+        row2.appendChild(col2)
+
+        container_2.appendChild(row)
+        container_2.appendChild(row2)
+        container.appendChild(container_2)
+    }
+
+
+}
+
+
+async function connectChat(sender, recipient){
+
+    stompClient.subscribe('/topic/message/' + sender, onMessageReceivedSender);
+    stompClient.subscribe('/topic/message/' + recipient, onMessageReceivedRecipient);
+
+    console.log(sender, recipient)
+    await chat(sender, recipient)
+
+}
+
+async function onMessageReceivedSender(payload){
+
+    let data = JSON.parse(payload.body)
+
+    let message_input = document.getElementById('message_input')
+
+    let message_text = message_input.value
+
+    let container = document.querySelector('.message-mid')
+
+    let text = document.createTextNode(data.sender + ': ' + data.content)
+
+    let text_p = document.createElement('p')
+
+    text_p.appendChild(text)
+
+    container.appendChild(text_p)
+
+    console.log('sender')
+
+
+
+}
+
+async function onMessageReceivedRecipient(payload){
+
+    let data = JSON.parse(payload.body)
+
+
+
+    let container = document.querySelector('.message-mid')
+
+    let text = document.createTextNode(data.sender + ': ' + data.content)
+
+
+
+    let text_p = document.createElement('p')
+
+    text_p.appendChild(text)
+
+    container.appendChild(text_p)
+
+    console.log('recipient')
+
+}
+async function sendMessage() {
+    let message_input = document.getElementById('message_input')
+
+    let message_text = message_input.value
+    stompClient.send("/app/message.addMessageSender",
+        {},
+        JSON.stringify({
+
+            content: message_text,
+            sender: json.username,
+            type: "NOTE",
+            date: "12.12.1234 12:12",
+            recipient: recipient2
+        }))
+    stompClient.send("/app/message.addMessageRecipient",
+        {},
+        JSON.stringify({
+
+            content: message_text,
+            sender: json.username,
+            type: "NOTE",
+            date: "12.12.1234 12:12",
+            recipient: recipient2
+        }))
+}
+
+async function chat(sender, recipient) {
+
+    document.getElementById('messages').classList.add('hidden');
+
+
+    document.getElementById('chat').classList.remove('hidden')
+
+    let users = document.getElementById('users')
+    users.innerHTML = sender + ", " + recipient
+
+}

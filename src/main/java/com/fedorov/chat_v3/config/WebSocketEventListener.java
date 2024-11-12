@@ -51,7 +51,7 @@ public class WebSocketEventListener {
     public void handleWebSocketConnectListener(SessionConnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
-        // Получаем атрибуты сессии
+
         Map<String, Object> sessionAttributes = headerAccessor.getSessionAttributes();
 
         if (sessionAttributes == null) {
@@ -59,7 +59,7 @@ public class WebSocketEventListener {
             headerAccessor.setSessionAttributes(sessionAttributes);
         }
 
-        // Извлекаем заголовки
+
         String username = headerAccessor.getFirstNativeHeader("username");
 
         if (username != null) {

@@ -128,7 +128,7 @@ main.main {
 .note {
     display: flex;
     flex-direction: column;
-    height: 25vh;
+    min-height: 25vh;
     width: 70%;
 
 
@@ -138,12 +138,31 @@ main.main {
     border: 1px solid #b6b4b4;
 
     margin-bottom: 20px;
+    overflow-wrap: break-word; /* Позволяет переносить длинные слова */
+    word-wrap: break-word;
+
 }
 
 .top_feed {
     display: flex;
+    flex-wrap: wrap;
+     /* Позволяет переносить длинные слова */
+    word-wrap: break-word; /* Для совместимости с более старыми браузерами */
+    overflow: hidden; /* Скрывает переполнение */
+    white-space: normal;
+    word-break: break-all;
+
 }
 
+
+.row {
+    display: flex; /* Используем flexbox для расположения элементов */
+    flex-wrap: wrap;
+}
+.col-md-12 {
+    flex: 1; /* Элемент занимает доступное пространство */
+    padding: 10px; /* Отступы внутри колонки */
+}
 .note img {
 
     border-radius: 50%;
@@ -156,6 +175,7 @@ main.main {
 
 .new_note {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     height: 15vh;
     width: 70%;
@@ -167,4 +187,34 @@ main.main {
     border: 1px solid #b6b4b4;
 
     margin-bottom: 20px;
+    word-break: break-all; /* Позволяет переносить длинные слова */
+    word-wrap: break-word; /* Для совместимости с более старыми браузерами */
+    overflow: hidden; /* Скрывает переполнение */
+    white-space: normal;
+
 }
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    height: 70vh; /* Высота контейнера */
+    width: 70%; /* Ширина контейнера */
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 20px;
+    border: 1px solid #b6b4b4;
+    margin-bottom: 20px;
+}
+
+.message-mid {
+    flex: 1; /* Занимает все доступное пространство */
+    overflow-y: auto; /* Позволяет прокручивать содержимое, если оно превышает высоту */
+    width: 100%;
+    height: 45vh/* Занимает всю ширину родительского контейнера */
+}
+
+.message-bottom {
+    margin-top: auto; /* Прижимает этот элемент к низу */
+    width: 100%; /* Занимает всю ширину родительского контейнера */
+}
+
